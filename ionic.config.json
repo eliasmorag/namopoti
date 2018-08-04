@@ -1,0 +1,7 @@
+{
+  "name": "namopoti",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
