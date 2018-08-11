@@ -21,8 +21,28 @@
               </ion-card-title>
               <p>{{item.descripcion}}</p>
           </ion-card-content>
+          <ion-row>
+            <ion-col>
+              <button ion-button icon-start clear small>
+                <ion-icon name="md-share-alt"></ion-icon>
+                <div>Compartir</div>
+              </button>
+            </ion-col>
+            <ion-col>
+              <button ion-button icon-start clear small>
+                <ion-icon name="md-add"></ion-icon>
+                <div>Agregar</div>
+              </button>
+            </ion-col>
+            <ion-col>
+              <button ion-button icon-start clear small>
+                <div>{{item.puntos}} puntos</div>
+              </button>
+            </ion-col>
+          </ion-row>
+        
         </ion-card>
       </ion-slide>
     </ion-slides>
-  <button ion-button secondary menuToggle>Toggle Menu</button>
 </ion-content>
+
