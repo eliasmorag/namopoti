@@ -14,7 +14,9 @@
       <ion-slide class="text" *ngFor="let item of items | async">
         <ion-card  class=“card”> 
 
-          <img src="{{item.src}}">
+          <div class="img-container">
+            <img class="card-image" src="{{item.src}}">
+          </div>
           <ion-card-content>
               <ion-card-title>
                   {{item.nombre}}
