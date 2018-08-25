@@ -1,3 +1,4 @@
+import { LoginPage } from './../pages/login/login';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -12,6 +13,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 
+import { Facebook } from '@ionic-native/facebook';
+
 const config = {
   apiKey: "AIzaSyAiwR4wZB-J89r3ExyTKYV1ECl3MOo6K_E",
   authDomain: "namopotipora.firebaseapp.com",
@@ -25,7 +28,8 @@ const config = {
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
@@ -37,12 +41,14 @@ const config = {
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    LoginPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     AngularFireDatabase,
+    Facebook,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
