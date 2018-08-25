@@ -14,6 +14,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 
 import { Facebook } from '@ionic-native/facebook';
+import { AuthProvider } from '../providers/auth/auth';
 
 const config = {
   apiKey: "AIzaSyAiwR4wZB-J89r3ExyTKYV1ECl3MOo6K_E",
@@ -35,7 +36,7 @@ const config = {
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(config),
-    AngularFireDatabaseModule,
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -49,7 +50,8 @@ const config = {
     SplashScreen,
     AngularFireDatabase,
     Facebook,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    AuthProvider,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })
 export class AppModule {}
