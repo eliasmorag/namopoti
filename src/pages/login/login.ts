@@ -28,6 +28,7 @@ export class LoginPage {
 
   login() {
     this.auth.login();
+    
     if (this.auth.isAuthenticated) {
       this.navCtrl.setRoot(HomePage);
     }

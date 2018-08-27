@@ -12,14 +12,18 @@ import { App } from 'ionic-angular';
 @Injectable()
 export class AuthProvider {
 
+  userData: any;
   constructor(private fb: Facebook, public app: App) {
     console.log('Hello AuthProvider Provider');
   }
 
   public login(): Promise<any> {
     return  this.fb.login(['public_profile', 'user_friends', 'email'])
-    .then((res: FacebookLoginResponse) => console.log('Logged into Facebook!', res))
-    .catch(e => console.log('Error logging into Facebook', e));
+    .then((res: FacebookLoginResponse) => { this.fb.api('me?fields=id,name,email,picture.width(720).height(720).as(picture_large)', [])
+      .then(profile => { 
+        this.userData = {email: profile['email'], picture: profile['picture_large']['data']['url'], userName: profile['name']};
+      });
+    }).catch(e => console.log('Error logging into Facebook', e));
   }
 
   public logout(): void {
@@ -34,6 +38,10 @@ export class AuthProvider {
         return res.status === 'connected'
       });
     return false;
+  }
+
+  public getUserData() : any {
+    return this.userData;
   }
 
 }
