@@ -31,4 +31,6 @@ export class LoginPage {
     }
   }
 
+   bypass(){}
+
 }
