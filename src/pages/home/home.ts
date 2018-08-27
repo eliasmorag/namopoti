@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, MenuController } from 'ionic-angular';
 
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/';
@@ -12,8 +12,9 @@ export class HomePage {
 
   items: Observable<any[]>;
 
-  constructor(public navCtrl: NavController,  afDB: AngularFireDatabase) {
-      this.items = afDB.list('tarjetas').valueChanges();
+  constructor(public navCtrl: NavController, public menuCtrl: MenuController,  afDB: AngularFireDatabase) {
+    this.menuCtrl.enable(true, 'myMenu');
+    this.items = afDB.list('tarjetas').valueChanges();
   }
 
 }
