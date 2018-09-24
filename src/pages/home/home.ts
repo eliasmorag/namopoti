@@ -14,10 +14,17 @@ export class HomePage {
   items: Observable<any[]>;
   userData: any;
 
-  constructor(public navCtrl: NavController, public menuCtrl: MenuController,  afDB: AngularFireDatabase, auth: AuthProvider) {
+  constructor(
+    public navCtrl: NavController, 
+    public menuCtrl: MenuController,  
+    afDB: AngularFireDatabase, 
+    public auth: AuthProvider) {
     this.menuCtrl.enable(true, 'myMenu');
     this.items = afDB.list('tarjetas').valueChanges();
-    this.userData = auth.getUserData();
+  }
+
+  ionViewCanEnter() {
+    return this.auth.isLoggedIn();
   }
 
 }

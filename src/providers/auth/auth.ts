@@ -1,8 +1,13 @@
-import { LoginPage } from './../../pages/login/login';
 import { Injectable } from '@angular/core';
-import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
-import { App, ToastController } from 'ionic-angular';
+import { Facebook } from '@ionic-native/facebook';
 import firebase from 'firebase';
+import { Observable } from 'rxjs';
+import { AngularFireAuth } from "angularfire2/auth";
+import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
+import { Platform } from "ionic-angular";
+import { switchMap, first } from "rxjs/operators";
+import { of } from 'rxjs';
+
 
 /*
   Generated class for the AuthProvider provider.
@@ -12,48 +17,84 @@ import firebase from 'firebase';
 */
 @Injectable()
 export class AuthProvider {
+  user: Observable<any>;
 
-  userData: any;
-  constructor(private fb: Facebook, public app: App, public toastCtrl: ToastController) {
-    console.log('Hello AuthProvider Provider');
+  constructor(
+    private afAuth: AngularFireAuth,
+    private af: AngularFireDatabase,
+    private facebook: Facebook,
+    private platform: Platform
+  ) {
+    this.user = this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user) {
+          return this.af.object<any>(`users/${user.uid}`).valueChanges();
+        } else {
+          return of(null);
+        }
+      })
+    );
   }
 
-  public login(): Promise<any> {
-    return  this.fb.login(['public_profile', 'user_friends', 'email'])
-    .then((res: FacebookLoginResponse) => {
-          var credential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
-          firebase.auth().signInWithCredential(credential).then((info) => { this.showToast(info.displayName);});
-         }).then( () => { this.fb.api('me?fields=id,name,email,picture.width(720).height(720).as(picture_large)', []).then(profile => { 
-      this.userData = {email: profile['email'], picture: profile['picture_large']['data']['url'], userName: profile['name']};
-    })}
-    ).catch(e => console.log('Error logging into Facebook', e));
+  private updateUserData(user: any) {
+    const userRef: AngularFireObject<any> = this.af.object(
+      `users/${user.uid}`
+    );
+
+    const data = {
+      uid: user.uid,
+      email: user.email || null,
+      displayName: user.displayName || 'usuario sin nombre',
+      photoURL: user.photoURL || "https://goo.gl/7kz9qG"
+    };
+    return userRef.set(data);
   }
 
-  public logout(): void {
-    this.fb.logout();
-    let navCtrl = this.app.getActiveNav();
-    navCtrl.setRoot(LoginPage);
+  async facebookLogin() {
+    if (this.platform.is("cordova")) {
+      return await this.nativeFacebookLogin();
+    } else {
+      return await this.webFacebookLogin();
+    }
   }
 
-  public isAuthenticated(): boolean {
-    this.fb.getLoginStatus()
-      .then((res: FacebookLoginResponse) => {
-        return res.status === 'connected'
-      });
-    return false;
+  async nativeFacebookLogin(): Promise<void> {
+    try {
+      const response = await this.facebook.login(["email", "public_profile"]);
+      const facebookCredential = firebase.auth.FacebookAuthProvider.credential(response.authResponse.accessToken);
+
+      const firebaseUser = await firebase.auth().signInWithCredential(facebookCredential);
+
+      return await this.updateUserData(firebaseUser);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
-  public getUserData() : any {
-    return this.userData;
+  async webFacebookLogin(): Promise<void> {
+    try {
+      const provider = new firebase.auth.FacebookAuthProvider();
+      const credential = await this.afAuth.auth.signInWithPopup(provider);
+
+      return await this.updateUserData(credential.user);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
-  showToast(name) {
-    const toast = this.toastCtrl.create({
-      message: 'Bienvenido ' + name,
-      position: 'bottom',
-      duration: 1000
-    });
-    toast.present();
+  async logout(): Promise<any> {
+    return this.afAuth.auth.signOut();
+  }
+
+  // Current user as a Promise. Useful for one-off operations.
+  async getCurrentUser(): Promise<any> {
+    return this.user.pipe(first()).toPromise();
+  }
+
+  // Current user as boolean Promise. Used in router guards
+  async isLoggedIn(): Promise<boolean> {
+    const user = await this.getCurrentUser();
+    return !!user;
   }
 
 }

@@ -1,3 +1,4 @@
+import { ProfilePage } from './../pages/profile/profile';
 import { AuthProvider } from './../providers/auth/auth';
 import { LoginPage } from './../pages/login/login';
 import { Component, ViewChild } from '@angular/core';
@@ -16,32 +17,40 @@ import { timer } from 'rxjs/observable/timer';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+  rootPage:any = null;
 
   pages: Array<{title: string, component: any}>;
 
   showSplash = true;
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, 
-              public auth: AuthProvider) {
-    this.initializeApp();
+  constructor(
+    public platform: Platform, 
+    public statusBar: StatusBar, 
+    public splashScreen: SplashScreen, 
+    public auth: AuthProvider) {
+      platform.ready().then(() => {
+        auth.getCurrentUser()
+        .then(user => { 
+          if (user) {
+            this.rootPage = HomePage 
+          } else {
+            this.rootPage = LoginPage
+          }
+
+          this.statusBar.styleLightContent();
+          this.statusBar.backgroundColorByHexString('#4EAE1F');
+          this.splashScreen.hide();
+          timer(3000).subscribe(()=> this.showSplash = false);        
+        })
+
+      });
 
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
+      { title: 'Perfil', component: ProfilePage },
       { title: 'List', component: ListPage },
     ];
 
-  }
-
-  initializeApp() {
-    this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      this.statusBar.styleLightContent();
-      this.statusBar.backgroundColorByHexString('#4EAE1F');
-      this.splashScreen.hide();
-      timer(3000).subscribe(()=> this.showSplash = false);
-    });
   }
 
   openPage(page) {

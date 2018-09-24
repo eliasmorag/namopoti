@@ -1,6 +1,6 @@
 import { HomePage } from './../home/home';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, ToastController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 
 /**
@@ -17,23 +17,27 @@ import { AuthProvider } from '../../providers/auth/auth';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public menuCtrl: MenuController, 
-              public navParams: NavParams, public auth: AuthProvider) {
-    this.menuCtrl.enable(false, 'myMenu');
+  constructor(
+    public auth: AuthProvider, 
+    public navCtrl: NavController,
+    public toastCtrl: ToastController
+  ) {}
+
+  async login() {
+
+    await this.auth.facebookLogin();
+    await this.showToast();
+    await this.navCtrl.setRoot(HomePage)
+
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+  showToast() {
+    const toast = this.toastCtrl.create({
+      message: 'Bienvenido ',
+      position: 'bottom',
+      duration: 1000
+    });
+    toast.present();
   }
-
-  login() {
-    this.auth.login();
-    
-    if (this.auth.isAuthenticated) {
-      this.navCtrl.setRoot(HomePage);
-    }
-  }
-
-   bypass(){}
 
 }
