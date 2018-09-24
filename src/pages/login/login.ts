@@ -20,10 +20,14 @@ export class LoginPage {
   constructor(public navCtrl: NavController, public menuCtrl: MenuController, 
               public navParams: NavParams, public auth: AuthProvider) {
     this.menuCtrl.enable(false, 'myMenu');
+    if (this.auth.isAuthenticated) {
+      this.navCtrl.setRoot(HomePage);
+    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+    
   }
 
   login() {
