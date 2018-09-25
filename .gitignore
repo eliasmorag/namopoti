@@ -36,3 +36,5 @@ UserInterfaceState.xcuserstate
 
 config.xml
 my-release-key\.jks
+
+package-lock\.json
