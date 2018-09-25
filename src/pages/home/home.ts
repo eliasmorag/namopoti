@@ -4,6 +4,8 @@ import { NavController, MenuController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/';
 import { AuthProvider } from '../../providers/auth/auth';
+import { SocialSharing } from '@ionic-native/social-sharing';
+
 
 @Component({
   selector: 'page-home',
@@ -18,13 +20,22 @@ export class HomePage {
     public navCtrl: NavController, 
     public menuCtrl: MenuController,  
     afDB: AngularFireDatabase, 
-    public auth: AuthProvider) {
+    public auth: AuthProvider,
+    private socialSharing: SocialSharing) {
     this.menuCtrl.enable(true, 'myMenu');
     this.items = afDB.list('tarjetas').valueChanges();
   }
 
   ionViewCanEnter() {
     return this.auth.isLoggedIn();
+  }
+
+  shareInFacebook(item:any) {
+    this.socialSharing.shareViaFacebookWithPasteMessageHint(item.descripcion, item.src).then(() => {
+      // Success!
+    }).catch(() => {
+      // Error!
+    });
   }
 
 }

@@ -18,6 +18,8 @@ import { Facebook } from '@ionic-native/facebook';
 import { AuthProvider } from '../providers/auth/auth';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { ComponentsModule } from '../components/components.module';
+import { SocialSharing } from '@ionic-native/social-sharing';
+
 
 const config = {
   apiKey: "AIzaSyAiwR4wZB-J89r3ExyTKYV1ECl3MOo6K_E",
@@ -59,6 +61,7 @@ const config = {
     Facebook,
     AuthProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    SocialSharing
   ]
 })
 export class AppModule {}
