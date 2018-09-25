@@ -1,11 +1,11 @@
+import { DatabaseProvider, Activity } from './../../providers/database/database';
 import { Component } from '@angular/core';
-import { NavController, MenuController } from 'ionic-angular';
+import { NavController, MenuController, ToastController } from 'ionic-angular';
 
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/';
 import { AuthProvider } from '../../providers/auth/auth';
 import { SocialSharing } from '@ionic-native/social-sharing';
-
 
 @Component({
   selector: 'page-home',
@@ -21,7 +21,9 @@ export class HomePage {
     public menuCtrl: MenuController,  
     afDB: AngularFireDatabase, 
     public auth: AuthProvider,
-    private socialSharing: SocialSharing) {
+    private socialSharing: SocialSharing,
+    public db: DatabaseProvider,
+    public toastCtrl: ToastController) {
     this.menuCtrl.enable(true, 'myMenu');
     this.items = afDB.list('tarjetas').valueChanges();
   }
@@ -36,6 +38,20 @@ export class HomePage {
     }).catch(() => {
       // Error!
     });
+  }
+
+  async addActivity(user, item) {
+    await this.db.createActivity(user.uid, item.id);
+    await this.showToast();
+  }
+
+  showToast() {
+    const toast = this.toastCtrl.create({
+      message: 'Actividad registrada',
+      position: 'bottom',
+      duration: 1000
+    });
+    toast.present();
   }
 
 }

@@ -19,6 +19,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { ComponentsModule } from '../components/components.module';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { DatabaseProvider } from '../providers/database/database';
 
 
 const config = {
@@ -61,7 +62,8 @@ const config = {
     Facebook,
     AuthProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    SocialSharing
+    SocialSharing,
+    DatabaseProvider
   ]
 })
 export class AppModule {}

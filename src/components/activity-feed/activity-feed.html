@@ -1,0 +1,10 @@
+<h3>Actividades</h3>
+
+<ion-card *ngFor="let activity of activities | async">
+  <ion-card-header>
+    {{activity.createdAt | date:'medium'}}
+  </ion-card-header>
+  <ion-card-content>
+    {{activity.cardId}}
+  </ion-card-content>
+</ion-card>
