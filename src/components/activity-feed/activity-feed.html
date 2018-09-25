@@ -1,10 +1,19 @@
 <h3>Actividades</h3>
 
+<!--<ion-list>
+  <ion-item *ngFor="let activity of activities | async">
+    {{activity.cardDescription || activity.cardId}}
+    <div class="item-note" item-end>
+      {{activity.createdAt | date:'medium'}}
+    </div>
+  </ion-item>
+</ion-list>-->
+
 <ion-card *ngFor="let activity of activities | async">
   <ion-card-header>
-    {{activity.createdAt | date:'medium'}}
+    {{activity.cardDescription || activity.cardId}}
   </ion-card-header>
   <ion-card-content>
-    {{activity.cardId}}
+    {{activity.createdAt | date:'medium'}}
   </ion-card-content>
 </ion-card>

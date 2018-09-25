@@ -5,6 +5,7 @@ import firebase from 'firebase';
 export interface Activity {
   createdAt: any;
   cardId: number;
+  description: string;
 }
 
 /*
@@ -33,9 +34,9 @@ export class DatabaseProvider {
     return this.af.list('/activities/' + userId, ref => ref.orderByChild('createdAt'));
   }
 
-  createActivity(userId: string, cardId: number ) {
+  createActivity(userId: string, cardId: number, cardDescription: string ) {
     const createdAt = firebase.database.ServerValue.TIMESTAMP;
-    const item = {createdAt, cardId};
+    const item = {createdAt, cardId, cardDescription};
     const userActivitiesRef = this.af.list('activities/' + userId);
     return userActivitiesRef.push(item);
   }

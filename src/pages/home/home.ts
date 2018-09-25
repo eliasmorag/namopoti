@@ -41,7 +41,7 @@ export class HomePage {
   }
 
   async addActivity(user, item) {
-    await this.db.createActivity(user.uid, item.id);
+    await this.db.createActivity(user.uid, item.id, item.nombre);
     await this.showToast();
   }
 
