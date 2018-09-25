@@ -41,4 +41,14 @@ export class DatabaseProvider {
     return userActivitiesRef.push(item);
   }
 
+  addPoints(userId: string, cardPoints: number) {
+    this.af.database.ref('puntos/' + userId + '/bolsa').transaction(bolsa => {
+      if (bolsa === null) {
+        return bolsa = cardPoints;
+      } else {
+        return bolsa + cardPoints;
+      }
+    });
+  }
+
 }

@@ -42,6 +42,7 @@ export class HomePage {
 
   async addActivity(user, item) {
     await this.db.createActivity(user.uid, item.id, item.nombre);
+    await this.db.addPoints(user.uid, item.puntos);
     await this.showToast();
   }
 
