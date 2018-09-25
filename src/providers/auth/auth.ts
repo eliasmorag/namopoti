@@ -45,7 +45,7 @@ export class AuthProvider {
       uid: user.uid,
       email: user.email || null,
       displayName: user.displayName || 'usuario sin nombre',
-      photoURL: user.photoURL || "https://goo.gl/7kz9qG"
+      photoURL: user.photoURL + "?height=500" || "https://goo.gl/7kz9qG"
     };
     return userRef.set(data);
   }
