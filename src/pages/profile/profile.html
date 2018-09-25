@@ -17,7 +17,7 @@
 
   <ng-container *ngIf="auth.user | async as user">
 
-    <img [src]="user.photoURL">
+    <img class="circle-pic"  [src]="user.photoURL">
     <h2>{{ user.displayName }} </h2>
 
     <hr>

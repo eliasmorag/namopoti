@@ -21,6 +21,7 @@ import { ComponentsModule } from '../components/components.module';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { DatabaseProvider } from '../providers/database/database';
 
+import { HttpClientModule } from '@angular/common/http'; 
 
 const config = {
   apiKey: "AIzaSyAiwR4wZB-J89r3ExyTKYV1ECl3MOo6K_E",
@@ -45,7 +46,8 @@ const config = {
     AngularFireModule.initializeApp(config),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    ComponentsModule
+    ComponentsModule,
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

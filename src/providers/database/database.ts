@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { AngularFireDatabase} from 'angularfire2/database';
 import firebase from 'firebase';
 
 export interface Activity {
@@ -17,13 +17,11 @@ export interface Activity {
 @Injectable()
 export class DatabaseProvider {
 
-  private activitiesRef: AngularFireList<Activity>;
 
 
   constructor(
     private af: AngularFireDatabase 
   ) {
-    this.activitiesRef = this.af.list('activities');
   }
 
   getRecentUserActivities(userId: string) {

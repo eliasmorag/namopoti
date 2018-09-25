@@ -1,8 +1,7 @@
 import { Observable } from 'rxjs/';
 import { AuthProvider } from './../../providers/auth/auth';
-import { DatabaseProvider, Activity } from './../../providers/database/database';
-import { Component, OnInit, Input} from '@angular/core';
-import { map } from 'rxjs/operators';
+import { DatabaseProvider } from './../../providers/database/database';
+import { Component, OnInit} from '@angular/core';
 
 /**
  * Generated class for the ActivityFeedComponent component.

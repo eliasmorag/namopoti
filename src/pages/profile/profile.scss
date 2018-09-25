@@ -1,3 +1,11 @@
 page-profile {
 
 }
+
+.circle-pic{
+    width:250px;
+    height:250px;
+    -webkit-border-radius: 50%;
+    border-radius: 20%;
+    overflow: hidden;
+}

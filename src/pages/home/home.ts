@@ -1,4 +1,4 @@
-import { DatabaseProvider, Activity } from './../../providers/database/database';
+import { DatabaseProvider} from './../../providers/database/database';
 import { Component } from '@angular/core';
 import { NavController, MenuController, ToastController } from 'ionic-angular';
 
@@ -23,7 +23,7 @@ export class HomePage {
     public auth: AuthProvider,
     private socialSharing: SocialSharing,
     public db: DatabaseProvider,
-    public toastCtrl: ToastController) {
+    public toastCtrl: ToastController){
     this.menuCtrl.enable(true, 'myMenu');
     this.items = afDB.list('tarjetas').valueChanges();
   }
@@ -54,5 +54,4 @@ export class HomePage {
     });
     toast.present();
   }
-
 }
