@@ -22,6 +22,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { DatabaseProvider } from '../providers/database/database';
 
 import { HttpClientModule } from '@angular/common/http'; 
+import { LeaderboardPage } from '../pages/leaderboard/leaderboard';
 
 const config = {
   apiKey: "AIzaSyAiwR4wZB-J89r3ExyTKYV1ECl3MOo6K_E",
@@ -38,7 +39,8 @@ const config = {
     HomePage,
     ListPage,
     LoginPage,
-    ProfilePage
+    ProfilePage,
+    LeaderboardPage
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,8 @@ const config = {
     HomePage,
     ListPage,
     LoginPage,
-    ProfilePage
+    ProfilePage,
+    LeaderboardPage
   ],
   providers: [
     StatusBar,

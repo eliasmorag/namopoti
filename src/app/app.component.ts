@@ -10,6 +10,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
 import { timer } from 'rxjs/observable/timer';
+import { LeaderboardPage } from '../pages/leaderboard/leaderboard';
 
 @Component({
   templateUrl: 'app.html'
@@ -48,6 +49,7 @@ export class MyApp {
     this.pages = [
       { title: 'Mi Perfil', component: ProfilePage },
       { title: 'Mis Actividades', component: ListPage },
+      { title: 'Amigos', component: LeaderboardPage }
     ];
 
   }
