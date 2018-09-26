@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase} from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireObject} from 'angularfire2/database';
 import firebase from 'firebase';
 
 export interface Activity {
@@ -47,6 +47,10 @@ export class DatabaseProvider {
         return bolsa + cardPoints;
       }
     });
+  }
+
+  getUserPoints(userId: string): AngularFireObject<any> {
+    return this.af.object('/puntos/' + userId);
   }
 
 }
